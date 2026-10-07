@@ -121,6 +121,13 @@ func TestThinkingClose(t *testing.T) {
 			"<|end|><|start|>assistant<|message|>",
 		}},
 		{parser: "harmony", lastMessage: contentPrefill},
+		{parser: "llm-jp-4", want: []string{
+			"<|end|><|start|> assistant<|channel|> final<|message|>",
+			"<|end|><|start|> assistant<|channel|> final <|constrain|>  json<|message|>",
+			"<|end|><|start|> assistant<|channel|> commentary<|message|>",
+			"<|end|><|start|> assistant<|message|>",
+		}},
+		{parser: "llm-jp-4", lastMessage: contentPrefill},
 	}
 
 	for _, tt := range tests {
@@ -147,6 +154,7 @@ func TestBuiltInParsersStillWork(t *testing.T) {
 		{"qwen3.5"},
 		{"ornith"},
 		{"harmony"},
+		{"llm-jp-4"},
 		{"nemotron-3-nano"},
 		{"nemotron-3.5-nano"},
 	}
@@ -169,6 +177,11 @@ func TestParserPreservedTokensCoverKnownLlamaServerRegressions(t *testing.T) {
 	}{
 		{
 			name:        "harmony",
+			want:        []string{"<|start|>", "<|message|>", "<|channel|>", "<|constrain|>"},
+			wantMissing: []string{"<|call|>"},
+		},
+		{
+			name:        "llm-jp-4",
 			want:        []string{"<|start|>", "<|message|>", "<|channel|>", "<|constrain|>"},
 			wantMissing: []string{"<|call|>"},
 		},

@@ -73,6 +73,8 @@ func ParserForName(name string) Parser {
 		return &PassthroughParser{}
 	case "harmony":
 		return harmony.NewHarmonyMessageHandler()
+	case "llm-jp-4":
+		return &LLMJP4Parser{}
 	case "cogito":
 		return &CogitoParser{}
 	case "deepseek3":
